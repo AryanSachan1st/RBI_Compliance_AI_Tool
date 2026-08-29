@@ -30,9 +30,9 @@ async def upload_user_document(file: UploadFile):
             "message": "Document uploaded successfully",
             "saved_doc_name": new_file_name,
             "original_file_name": file.filename,
-            "file_path": file_path,
             "total_pages": total_pages,
-            "text_length": total_words
+            "text_length": total_words,
+            "content": store_file.read().decode('utf-8')
         }
     except Exception as e:
         raise HTTPException(

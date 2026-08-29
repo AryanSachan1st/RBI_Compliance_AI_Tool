@@ -6,7 +6,7 @@ import chromadb
 
 def ingest_rbi_source():
     print("Ingesting RBI Source...")
-    path = "storage/rbi_docs/dummy_rbi_rulebook.pdf"
+    path = "storage/rbi_source/dummy_rbi_rulebook.pdf"
 
     text = extract_pdf_text(path)
 
