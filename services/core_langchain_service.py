@@ -1,10 +1,12 @@
 from langchain_openai import ChatOpenAI
 from models.clause_model import ExtractedClause, ExtractedClauses
-from system_prompts import CLAUSE_EXTRACTION_SYSTEM_PROMPT,CONTRACT_ANALYSIS_SYSTEM_PROMPT
+from system_prompts.clause_extraction_prompt import CLAUSE_EXTRACTION_SYSTEM_PROMPT
+from system_prompts.contract_analysis_prompt import CONTRACT_ANALYSIS_SYSTEM_PROMPT
 from models.clause_model import ContractAnalysis
 from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings
 from config.settings import OPENAI_API_KEY
+import asyncio
 
 clause_llm = ChatOpenAI(
     model="gpt-5.6-luna",
@@ -58,8 +60,12 @@ retriever = vector_db.as_retriever(
     }
 )
 
-def retrieve_source_chunks(clause_text: str):
-    result = retriever.invoke(clause_text)
+# An async function call to retrieve_source_chunks for each clause in all_clauses (parallel)
+async def retrieve_source_chunks(clause_text: str):
+    loop = asyncio.get_event_loop()
+
+    # run_in_executor allows you to run CPU-bound operations in a separate thread pool, preventing them from blocking the event loop
+    result = await loop.run_in_executor(None, retriever.invoke, clause_text)
 
     docs = []
     for doc in result:
@@ -71,11 +77,16 @@ def retrieve_source_chunks(clause_text: str):
 
     return docs
 
-def retrieve_all_chunks(all_clauses: list[ExtractedClause]):
-    all_chunks = []
+# Parallel chunk retrieval for all clauses - reduces latency - time taken = slowest LLM call for one chunk instead of sum of all calls
+async def retrieve_all_chunks(all_clauses: list[ExtractedClause]):
+    tasks = [
+        retrieve_source_chunks(clause.get("clause_text")) for clause in all_clauses
+    ]
 
-    for clause in all_clauses:
-        chunks = retrieve_source_chunks(clause.get("clause_text"))
+    all_results = await asyncio.gather(*tasks)
+
+    all_chunks = []
+    for clause, chunks in zip(all_clauses, all_results):
         clause_chunk = {
             "clause_id": clause.get("clause_id"),
             "clause_type": clause.get("clause_type"),
