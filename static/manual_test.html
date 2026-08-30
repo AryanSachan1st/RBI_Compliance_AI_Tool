@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Rule Engine — Manual Test UI</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #171b21;
+    --border: #2a2f37;
+    --text: #e7eaee;
+    --muted: #9aa4b2;
+    --pass: #2ecc71;
+    --fail: #e74c3c;
+    --uncertain: #f1c40f;
+    --accent: #4c8dff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  header {
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 { margin: 0 0 4px; font-size: 20px; }
+  header p { margin: 0; color: var(--muted); font-size: 13px; }
+  .layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    min-height: calc(100vh - 74px);
+  }
+  nav {
+    border-right: 1px solid var(--border);
+    padding: 16px;
+  }
+  nav button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--muted);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  nav button.active {
+    background: var(--panel);
+    border-color: var(--border);
+    color: var(--text);
+  }
+  main { padding: 24px 32px; max-width: 720px; }
+  .panel {
+    display: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .panel.active { display: block; }
+  .panel h2 { margin-top: 0; font-size: 16px; }
+  .panel .desc { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
+  label {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin: 12px 0 4px;
+  }
+  input[type=text], input[type=number] {
+    width: 100%;
+    padding: 8px 10px;
+    background: #0d1014;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 14px;
+  }
+  .field-row { display: flex; gap: 8px; align-items: center; margin-top: 6px; }
+  .field-row input[type=text] { flex: 1; }
+  .field-row button { flex-shrink: 0; }
+  .small-btn {
+    padding: 8px 10px;
+    background: #232830;
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .submit-btn {
+    margin-top: 18px;
+    padding: 10px 18px;
+    background: var(--accent);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .submit-btn:disabled { opacity: 0.5; cursor: default; }
+  .result {
+    margin-top: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: none;
+  }
+  .result.visible { display: block; }
+  .result-status {
+    padding: 10px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #0f1216;
+  }
+  .result-status.PASS { background: var(--pass); }
+  .result-status.FAIL { background: var(--fail); }
+  .result-status.UNCERTAIN { background: var(--uncertain); }
+  .result-body {
+    padding: 14px 16px;
+    background: #0d1014;
+    font-size: 13px;
+  }
+  .result-body pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .result-message { margin: 0 0 10px; color: var(--text); }
+  .hint {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Deterministic Rule Engine — Manual Test UI</h1>
+  <p>Direct testing surface for rule_engine/ via routes/compliance_routes.py. For the automatic, document-driven flow (LLM → rule engine, no manual entry), see the <a href="/ui/" style="color:var(--accent);">Live Pipeline Demo →</a> instead. This manual page bypasses the LLM/RAG pipeline entirely — useful for testing individual rules in isolation with hand-picked numbers.</p>
+</header>
+
+<div class="layout">
+  <nav>
+    <button class="nav-btn active" data-tab="emi">EMI-001</button>
+    <button class="nav-btn" data-tab="interest">INTEREST-001</button>
+    <button class="nav-btn" data-tab="disclosure">DISCLOSURE-001</button>
+  </nav>
+
+  <main>
+
+    <!-- EMI-001 -->
+    <section class="panel active" id="panel-emi">
+      <h2>EMI Validation (EMI-001)</h2>
+      <div class="desc">Recalculates EMI from principal/rate/tenure and compares it to the document's stated EMI, within tolerance.</div>
+
+      <label>Principal (₹)</label>
+      <input type="number" id="emi-principal" value="100000" step="any" />
+
+      <label>Annual interest rate (%)</label>
+      <input type="number" id="emi-rate" value="12" step="any" />
+
+      <label>Tenure (months)</label>
+      <input type="number" id="emi-tenure" value="12" step="1" />
+
+      <label>Document-stated EMI (₹)</label>
+      <input type="number" id="emi-document" value="8900" step="any" />
+
+      <label>Confidence (0.0 – 1.0)</label>
+      <input type="number" id="emi-confidence" value="1.0" min="0" max="1" step="0.01" />
+
+      <button class="submit-btn" onclick="submitEMI()">Run EMI-001</button>
+      <div class="result" id="result-emi"></div>
+    </section>
+
+    <!-- INTEREST-001 -->
+    <section class="panel" id="panel-interest">
+      <h2>Interest Rate Validation (INTEREST-001)</h2>
+      <div class="desc">Compares the document's stated annual interest rate against the configured maximum (a placeholder default of 18% unless overridden via env vars — see rule_engine/config.py).</div>
+
+      <label>Document interest rate (%)</label>
+      <input type="number" id="interest-rate" value="18" step="any" />
+
+      <label>Confidence (0.0 – 1.0)</label>
+      <input type="number" id="interest-confidence" value="1.0" min="0" max="1" step="0.01" />
+
+      <button class="submit-btn" onclick="submitInterest()">Run INTEREST-001</button>
+      <div class="result" id="result-interest"></div>
+    </section>
+
+    <!-- DISCLOSURE-001 -->
+    <section class="panel" id="panel-disclosure">
+      <h2>Mandatory Disclosure Validation (DISCLOSURE-001)</h2>
+      <div class="desc">Checks that required disclosure fields are present and non-empty (placeholder required list: annual_percentage_rate, processing_fee, prepayment_penalty, grievance_redressal_contact — see rule_engine/config.py).</div>
+
+      <div id="disclosure-fields"></div>
+      <div class="field-row">
+        <input type="text" id="disclosure-new-key" placeholder="field name, e.g. processing_fee" />
+        <input type="text" id="disclosure-new-value" placeholder="value (leave blank to simulate missing)" />
+        <button class="small-btn" onclick="addDisclosureField()">Add field</button>
+      </div>
+
+      <label>Confidence (0.0 – 1.0)</label>
+      <input type="number" id="disclosure-confidence" value="1.0" min="0" max="1" step="0.01" />
+
+      <button class="submit-btn" onclick="submitDisclosure()">Run DISCLOSURE-001</button>
+      <div class="result" id="result-disclosure"></div>
+      <div class="hint">Tip: add all four placeholder fields with values to see PASS, or omit one / leave it blank to see FAIL.</div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // --- Tab switching ---
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // --- Shared result renderer ---
+  function renderResult(containerId, data) {
+    const el = document.getElementById(containerId);
+    el.classList.add('visible');
+    const status = data.status || 'UNCERTAIN';
+    el.innerHTML = `
+      <div class="result-status ${status}">${status}</div>
+      <div class="result-body">
+        <p class="result-message">${escapeHtml(data.message || '')}</p>
+        <pre>${escapeHtml(JSON.stringify(data, null, 2))}</pre>
+      </div>
+    `;
+  }
+
+  function renderError(containerId, err) {
+    const el = document.getElementById(containerId);
+    el.classList.add('visible');
+    el.innerHTML = `
+      <div class="result-status FAIL">REQUEST FAILED</div>
+      <div class="result-body">
+        <p class="result-message">Could not reach the API. Is uvicorn running?</p>
+        <pre>${escapeHtml(String(err))}</pre>
+      </div>
+    `;
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  async function postJSON(url, body) {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    return res.json();
+  }
+
+  // --- EMI-001 ---
+  async function submitEMI() {
+    const body = {
+      principal: document.getElementById('emi-principal').value,
+      annual_interest_rate: document.getElementById('emi-rate').value,
+      tenure_months: parseInt(document.getElementById('emi-tenure').value, 10),
+      document_emi: document.getElementById('emi-document').value,
+      context: { confidence: parseFloat(document.getElementById('emi-confidence').value) }
+    };
+    try {
+      const data = await postJSON('/compliance/validate/emi', body);
+      renderResult('result-emi', data);
+    } catch (err) {
+      renderError('result-emi', err);
+    }
+  }
+
+  // --- INTEREST-001 ---
+  async function submitInterest() {
+    const body = {
+      document_interest_rate: document.getElementById('interest-rate').value,
+      context: { confidence: parseFloat(document.getElementById('interest-confidence').value) }
+    };
+    try {
+      const data = await postJSON('/compliance/validate/interest-rate', body);
+      renderResult('result-interest', data);
+    } catch (err) {
+      renderError('result-interest', err);
+    }
+  }
+
+  // --- DISCLOSURE-001 ---
+  const defaultDisclosureFields = [
+    'annual_percentage_rate',
+    'processing_fee',
+    'prepayment_penalty',
+    'grievance_redressal_contact'
+  ];
+  function buildDisclosureFieldRow(key = '', value = '') {
+    const wrap = document.createElement('div');
+    wrap.className = 'field-row';
+    wrap.innerHTML = `
+      <input type="text" class="disc-key" value="${escapeHtml(key)}" placeholder="field name" />
+      <input type="text" class="disc-value" value="${escapeHtml(value)}" placeholder="value" />
+      <button class="small-btn" onclick="this.parentElement.remove()">Remove</button>
+    `;
+    document.getElementById('disclosure-fields').appendChild(wrap);
+  }
+  defaultDisclosureFields.forEach(f => buildDisclosureFieldRow(f, ''));
+
+  function addDisclosureField() {
+    const key = document.getElementById('disclosure-new-key').value.trim();
+    const value = document.getElementById('disclosure-new-value').value;
+    if (!key) return;
+    buildDisclosureFieldRow(key, value);
+    document.getElementById('disclosure-new-key').value = '';
+    document.getElementById('disclosure-new-value').value = '';
+  }
+
+  async function submitDisclosure() {
+    const fields = {};
+    document.querySelectorAll('#disclosure-fields .field-row').forEach(row => {
+      const k = row.querySelector('.disc-key').value.trim();
+      const v = row.querySelector('.disc-value').value;
+      if (k) fields[k] = v;
+    });
+    const body = {
+      document_fields: fields,
+      context: { confidence: parseFloat(document.getElementById('disclosure-confidence').value) }
+    };
+    try {
+      const data = await postJSON('/compliance/validate/disclosures', body);
+      renderResult('result-disclosure', data);
+    } catch (err) {
+      renderError('result-disclosure', err);
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Rule Engine — Live Pipeline Demo</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #171b21;
+    --border: #2a2f37;
+    --text: #e7eaee;
+    --muted: #9aa4b2;
+    --pass: #2ecc71;
+    --fail: #e74c3c;
+    --uncertain: #f1c40f;
+    --skip: #7f8c9a;
+    --accent: #4c8dff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  header {
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 { margin: 0 0 4px; font-size: 20px; }
+  header p { margin: 0; color: var(--muted); font-size: 13px; }
+  main { padding: 24px 32px; max-width: 980px; margin: 0 auto; }
+
+  .upload-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  input[type=file] { color: var(--text); }
+  button {
+    background: var(--accent);
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .stage-line {
+    color: var(--muted);
+    font-size: 13px;
+    margin: 4px 0;
+  }
+  .stage-line.active { color: var(--accent); font-weight: 600; }
+
+  .section {
+    margin-top: 28px;
+  }
+  .section h2 {
+    font-size: 15px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .step-badge {
+    display: inline-block;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+  .section .subtitle {
+    color: var(--muted);
+    font-size: 12.5px;
+    margin: 0 0 12px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    vertical-align: top;
+  }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; }
+  tr:last-child td { border-bottom: none; }
+  td.value { font-family: ui-monospace, Menlo, monospace; }
+  td.value.empty { color: var(--muted); font-style: italic; }
+
+  .flow-arrow {
+    text-align: center;
+    color: var(--muted);
+    font-size: 20px;
+    margin: 10px 0;
+  }
+
+  .rule-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--muted);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .rule-card.status-PASS { border-left-color: var(--pass); }
+  .rule-card.status-FAIL { border-left-color: var(--fail); }
+  .rule-card.status-UNCERTAIN { border-left-color: var(--uncertain); }
+  .rule-card.status-SKIPPED { border-left-color: var(--skip); }
+
+  .rule-card .row1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .rule-id { font-weight: 700; font-size: 14px; }
+  .status-chip {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 999px;
+    color: #0f1216;
+  }
+  .status-chip.PASS { background: var(--pass); }
+  .status-chip.FAIL { background: var(--fail); }
+  .status-chip.UNCERTAIN { background: var(--uncertain); }
+  .status-chip.SKIPPED { background: var(--skip); color: white; }
+
+  .rule-message { font-size: 13px; color: var(--text); margin-bottom: 8px; }
+  .rule-io {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    font-size: 12px;
+  }
+  .rule-io .box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+  }
+  .rule-io .box .label { color: var(--muted); text-transform: uppercase; font-size: 10px; margin-bottom: 4px; }
+  .rule-io .box pre { margin: 0; white-space: pre-wrap; word-break: break-word; font-family: ui-monospace, Menlo, monospace; }
+
+  #clauseSection { display: none; }
+  .toggle-link { color: var(--accent); cursor: pointer; font-size: 12.5px; text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Rule Engine — Live Pipeline Demo</h1>
+  <p>Upload a document. Watch the LLM's extracted numbers flow directly into the deterministic rule engine, and see its verdict.</p>
+</header>
+
+<main>
+  <div class="upload-row">
+    <input type="file" id="fileInput" accept=".pdf,.txt" />
+    <button id="uploadBtn">Run Pipeline</button>
+  </div>
+
+  <div id="stages"></div>
+
+  <div class="section" id="extractionSection" style="display:none;">
+    <h2><span class="step-badge">STEP 1</span> LLM Extracted These Numbers From The Document</h2>
+    <p class="subtitle">A structured-output LLM call over the raw document text — separate from the clause-analysis LLM call. Confidence reflects how certain the extraction was, not a fixed number.</p>
+    <table id="extractionTable">
+      <thead><tr><th>Field</th><th>Extracted Value</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="flow-arrow" id="flowArrow" style="display:none;">&#8595;&nbsp;fed directly into&nbsp;&#8595;</div>
+
+  <div class="section" id="rulesSection" style="display:none;">
+    <h2><span class="step-badge">STEP 2</span> Deterministic Rule Engine Output</h2>
+    <p class="subtitle">Each card below shows the exact input the rule engine received (input_snapshot) and the verdict it computed — PASS, FAIL, or UNCERTAIN. No LLM is involved past this point.</p>
+    <div id="rulesContainer"></div>
+  </div>
+
+  <div class="section" id="clauseToggleSection" style="display:none;">
+    <span class="toggle-link" id="toggleClauses">Show/hide the separate clause-by-clause LLM analysis (unrelated to the rule engine)</span>
+    <div id="clauseSection"></div>
+  </div>
+</main>
+
+<script>
+const fileInput = document.getElementById('fileInput');
+const uploadBtn = document.getElementById('uploadBtn');
+const stagesDiv = document.getElementById('stages');
+const extractionSection = document.getElementById('extractionSection');
+const extractionTableBody = document.querySelector('#extractionTable tbody');
+const flowArrow = document.getElementById('flowArrow');
+const rulesSection = document.getElementById('rulesSection');
+const rulesContainer = document.getElementById('rulesContainer');
+const clauseToggleSection = document.getElementById('clauseToggleSection');
+const clauseSection = document.getElementById('clauseSection');
+const toggleClauses = document.getElementById('toggleClauses');
+
+toggleClauses.addEventListener('click', () => {
+  clauseSection.style.display = clauseSection.style.display === 'block' ? 'none' : 'block';
+});
+
+const FIELD_LABELS = {
+  principal: 'Principal',
+  annual_interest_rate: 'Annual Interest Rate (%)',
+  tenure_months: 'Tenure (months)',
+  document_emi: 'Stated EMI',
+  annual_percentage_rate: 'Annual Percentage Rate',
+  processing_fee: 'Processing Fee',
+  prepayment_penalty: 'Prepayment Penalty',
+  grievance_redressal_contact: 'Grievance Redressal Contact',
+  extraction_confidence: 'Extraction Confidence',
+  notes: 'Notes',
+};
+
+function renderExtraction(numerics) {
+  extractionTableBody.innerHTML = '';
+  if (!numerics) {
+    extractionTableBody.innerHTML = '<tr><td colspan="2" class="value empty">Extraction step failed — see rule engine section below for details.</td></tr>';
+    extractionSection.style.display = 'block';
+    return;
+  }
+  for (const [key, label] of Object.entries(FIELD_LABELS)) {
+    const val = numerics[key];
+    const tr = document.createElement('tr');
+    const isEmpty = val === null || val === undefined || val === '';
+    tr.innerHTML = `<td>${label}</td><td class="value ${isEmpty ? 'empty' : ''}">${isEmpty ? 'not found in document' : val}</td>`;
+    extractionTableBody.appendChild(tr);
+  }
+  extractionSection.style.display = 'block';
+}
+
+function renderRuleCard(result) {
+  const card = document.createElement('div');
+  const isSkipped = result.skipped === true;
+  const status = isSkipped ? 'SKIPPED' : result.status;
+  card.className = `rule-card status-${status}`;
+
+  const message = isSkipped ? result.reason : result.message;
+  const inputBox = isSkipped ? 'not run' : JSON.stringify(result.input_snapshot, null, 2);
+  const outputBox = isSkipped
+    ? 'not run'
+    : JSON.stringify({
+        status: result.status,
+        expected_value: result.expected_value,
+        actual_value: result.actual_value,
+        difference: result.difference,
+        tolerance: result.tolerance,
+      }, null, 2);
+
+  card.innerHTML = `
+    <div class="row1">
+      <span class="rule-id">${result.rule_id}</span>
+      <span class="status-chip ${status}">${status}</span>
+    </div>
+    <div class="rule-message">${message}</div>
+    <div class="rule-io">
+      <div class="box"><div class="label">Input received by rule engine</div><pre>${inputBox}</pre></div>
+      <div class="box"><div class="label">Output from rule engine</div><pre>${outputBox}</pre></div>
+    </div>
+  `;
+  return card;
+}
+
+function renderRuleValidations(validations) {
+  rulesContainer.innerHTML = '';
+  (validations || []).forEach(r => rulesContainer.appendChild(renderRuleCard(r)));
+  rulesSection.style.display = 'block';
+  flowArrow.style.display = 'block';
+}
+
+function renderClauses(results) {
+  clauseSection.innerHTML = `<pre style="white-space:pre-wrap; font-size:12px; background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:12px;">${JSON.stringify(results, null, 2)}</pre>`;
+  clauseToggleSection.style.display = 'block';
+}
+
+uploadBtn.addEventListener('click', async () => {
+  const file = fileInput.files[0];
+  if (!file) { alert('Choose a file first.'); return; }
+
+  uploadBtn.disabled = true;
+  stagesDiv.innerHTML = '';
+  extractionSection.style.display = 'none';
+  rulesSection.style.display = 'none';
+  flowArrow.style.display = 'none';
+  clauseToggleSection.style.display = 'none';
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    const response = await fetch('/upload-doc/', { method: 'POST', body: formData });
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      const parts = buffer.split('\n\n');
+      buffer = parts.pop();
+
+      for (const part of parts) {
+        if (!part.startsWith('data: ')) continue;
+        const payload = JSON.parse(part.slice(6));
+
+        if (payload.stage && payload.stage !== 'Done') {
+          const line = document.createElement('div');
+          line.className = 'stage-line active';
+          line.textContent = payload.stage;
+          document.querySelectorAll('.stage-line').forEach(el => el.classList.remove('active'));
+          stagesDiv.appendChild(line);
+        }
+
+        if (payload.stage === 'Done') {
+          renderExtraction(payload.extracted_numerics);
+          renderRuleValidations(payload.rule_validations);
+          renderClauses(payload.results);
+        }
+      }
+    }
+  } catch (err) {
+    stagesDiv.innerHTML += `<div class="stage-line" style="color:var(--fail)">Error: ${err}</div>`;
+  } finally {
+    uploadBtn.disabled = false;
+  }
+});
+</script>
+
+</body>
+</html>
