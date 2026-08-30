@@ -1,0 +1,22 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+raw_pdfs/
+structured_docs/
+chroma_db/
+extracted_pdf_contents/
+
+chunks.jsonl
+*output*.*
+test.py
+
+
+.env

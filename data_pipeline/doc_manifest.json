@@ -1,0 +1,398 @@
+[
+  {
+    "title": "Reserve Bank of India (Commercial Banks - Internal Ombudsman) Directions, 2026",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13271",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/380MD14012026DAD56B73DC944F02AEA4530EC779AD7F.PDF",
+    "matched_topics": [
+      "consumer_protection"
+    ],
+    "local_path": "raw_pdfs\\sample1.pdf",
+    "sha256": "0215bfe2c1bb",
+    "doc_id": "sample1"
+  },
+  {
+    "title": "Reserve Bank of India (Small Finance Banks - Internal Ombudsman) Directions, 2026",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13272",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/381MD140120267212A1D4EF8349448E9416EF8F2D19B5.PDF",
+    "matched_topics": [
+      "consumer_protection"
+    ],
+    "local_path": "raw_pdfs\\sample2.pdf",
+    "sha256": "608c63fd3a88",
+    "doc_id": "sample2"
+  },
+  {
+    "title": "Reserve Bank of India (Payments Banks - Internal Ombudsman) Directions, 2026",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13273",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/NOT3821EAEF90E037B4061A91775A5525510C3.PDF",
+    "matched_topics": [
+      "consumer_protection"
+    ],
+    "local_path": "raw_pdfs\\sample3.pdf",
+    "sha256": "f7b033dc7c23",
+    "doc_id": "sample3"
+  },
+  {
+    "title": "Reserve Bank of India (Non-Banking Financial Companies - Internal Ombudsman) Directions, 2026",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13274",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/383MD14012026559E41DD96224880B75EDB2B96E4BD8B.PDF",
+    "matched_topics": [
+      "consumer_protection"
+    ],
+    "local_path": "raw_pdfs\\sample4.pdf",
+    "sha256": "f21cb7fe8838",
+    "doc_id": "sample4"
+  },
+  {
+    "title": "Reserve Bank of India (Non-Bank Prepaid Payment Instruments Issuers - Internal Ombudsman) Directions, 2026",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13275",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/384MD14012026E275757688DE4E68AF9813B3B9491E4B.PDF",
+    "matched_topics": [
+      "consumer_protection"
+    ],
+    "local_path": "raw_pdfs\\sample5.pdf",
+    "sha256": "30c6de250a18",
+    "doc_id": "sample5"
+  },
+  {
+    "title": "Reserve Bank of India (Credit Information Companies - Internal Ombudsman) Directions, 2026",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13276",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/NOT38578CF3B232A694DBEAB2A9CE71848DCA1.PDF",
+    "matched_topics": [
+      "consumer_protection"
+    ],
+    "local_path": "raw_pdfs\\sample6.pdf",
+    "sha256": "9889d4fdb44a",
+    "doc_id": "sample6"
+  },
+  {
+    "title": "Master Direction - Reserve Bank of India (Internal Ombudsman for Regulated Entities) Directions, 2023",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=12586",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/108MDINTERNALOMBUDSMANCC05402F77BE4F229B59877F341386A4.PDF",
+    "matched_topics": [
+      "consumer_protection"
+    ],
+    "local_path": "raw_pdfs\\sample7.pdf",
+    "sha256": "221d2d833c10",
+    "doc_id": "sample7"
+  },
+  {
+    "title": "Reserve Bank of India (Commercial Banks \u2013 Know Your Customer) Directions, 2025 (Updated as on December 29, 2025)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13141",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/169MD.PDF",
+    "matched_topics": [
+      "kyc"
+    ],
+    "local_path": "raw_pdfs\\sample8.pdf",
+    "sha256": "d7627def6a17",
+    "doc_id": "sample8"
+  },
+  {
+    "title": "Reserve Bank of India (Commercial Banks \u2013 Interest Rates on Advances) Directions, 2025",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13149",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/161MD.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample9.pdf",
+    "sha256": "dea50b36a1b1",
+    "doc_id": "sample9"
+  },
+  {
+    "title": "Reserve Bank of India (Commercial Banks \u2013 Credit Cards and Debit Cards: Issuance and Conduct) Directions, 2025",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13155",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/155MD.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample10.pdf",
+    "sha256": "4dd773b4a7a5",
+    "doc_id": "sample10"
+  },
+  {
+    "title": "Reserve Bank of India (Commercial Banks \u2013 Credit Facilities) Directions, 2025 (Updated as on July 15, 2026)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13156",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/154MD.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample11.pdf",
+    "sha256": "324761531f78",
+    "doc_id": "sample11"
+  },
+  {
+    "title": "Reserve Bank of India (Small Finance Banks \u2013 Know Your Customer) Directions, 2025 (Updated as on December 29, 2025)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13109",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/200MD.PDF",
+    "matched_topics": [
+      "kyc"
+    ],
+    "local_path": "raw_pdfs\\sample12.pdf",
+    "sha256": "90fb6d5927c2",
+    "doc_id": "sample12"
+  },
+  {
+    "title": "Reserve Bank of India (Small Finance Banks \u2013 Interest Rates on Advances) Directions, 2025",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13117",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/192MD.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample13.pdf",
+    "sha256": "08c5d4470a64",
+    "doc_id": "sample13"
+  },
+  {
+    "title": "Reserve Bank of India (Small Finance Banks \u2013 Credit Cards and Debit Cards: Issuance and Conduct) Directions, 2025",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13123",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/186MD.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample14.pdf",
+    "sha256": "f25b99551c48",
+    "doc_id": "sample14"
+  },
+  {
+    "title": "Reserve Bank of India (Small Finance Banks \u2013 Credit Facilities) Directions, 2025 (Updated as on July 15, 2026)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13124",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/185MD.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample15.pdf",
+    "sha256": "8d1b4dc352ad",
+    "doc_id": "sample15"
+  },
+  {
+    "title": "Reserve Bank of India (Payments Banks \u2013 Know Your Customer) Directions, 2025 (Updated as on December 29, 2025)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13090",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/218MD.PDF",
+    "matched_topics": [
+      "kyc"
+    ],
+    "local_path": "raw_pdfs\\sample16.pdf",
+    "sha256": "43c0786c6712",
+    "doc_id": "sample16"
+  },
+  {
+    "title": "Reserve Bank of India (Local Area Banks \u2013 Know Your Customer) Directions, 2025 (Updated as on December 29, 2025)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13064",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/243MD.PDF",
+    "matched_topics": [
+      "kyc"
+    ],
+    "local_path": "raw_pdfs\\sample17.pdf",
+    "sha256": "af1ee04f6cbe",
+    "doc_id": "sample17"
+  },
+  {
+    "title": "Reserve Bank of India (Local Area Banks \u2013 Interest Rates on Advances) Directions, 2025",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13072",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/235MD.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample18.pdf",
+    "sha256": "542525243876",
+    "doc_id": "sample18"
+  },
+  {
+    "title": "Reserve Bank of India (Local Area Banks \u2013 Credit Facilities) Directions, 2025 (Updated as on April 01, 2026)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13078",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/229MD.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample19.pdf",
+    "sha256": "c47282260e48",
+    "doc_id": "sample19"
+  },
+  {
+    "title": "Reserve Bank of India (Regional Rural Banks \u2013 Know Your Customer) Directions, 2025 (Updated as on December 29, 2025)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13040",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/266MDB4BD80DE4B394A50808E81ACC3A2358E.PDF",
+    "matched_topics": [
+      "kyc"
+    ],
+    "local_path": "raw_pdfs\\sample20.pdf",
+    "sha256": "8781e9501d28",
+    "doc_id": "sample20"
+  },
+  {
+    "title": "Reserve Bank of India (Regional Rural Banks \u2013 Interest Rates on Advances) Directions, 2025",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13047",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/259MD.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample21.pdf",
+    "sha256": "c57de7e22302",
+    "doc_id": "sample21"
+  },
+  {
+    "title": "Reserve Bank of India (Regional Rural Banks \u2013 Credit Cards and Debit Cards: Issuance and Conduct) Directions, 2025",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13052",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/254MD.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample22.pdf",
+    "sha256": "ede98fd75c3f",
+    "doc_id": "sample22"
+  },
+  {
+    "title": "Reserve Bank of India (Regional Rural Banks \u2013 Credit Facilities) Directions, 2025 (Updated as on April 01, 2026)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13053",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/253MD.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample23.pdf",
+    "sha256": "4a06d8e0d2da",
+    "doc_id": "sample23"
+  },
+  {
+    "title": "Reserve Bank of India (Urban Co-operative Banks \u2013 Know Your Customer) Directions, 2025 (Updated as on December 29, 2025)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13014",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/291MDE108E59AC43D4C13B2D06598B296C877.PDF",
+    "matched_topics": [
+      "kyc"
+    ],
+    "local_path": "raw_pdfs\\sample24.pdf",
+    "sha256": "a8103cdcf79e",
+    "doc_id": "sample24"
+  },
+  {
+    "title": "Reserve Bank of India (Urban Co-operative Banks \u2013 Interest Rates on Advances) Directions, 2025",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13022",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/283MDC3CE849D1EE047478359BA164A180EB2.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample25.pdf",
+    "sha256": "a8e29c771ffd",
+    "doc_id": "sample25"
+  },
+  {
+    "title": "Reserve Bank of India (Urban Co-operative Banks \u2013 Credit Cards and Debit Cards: Issuance and Conduct) Directions, 2025",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13027",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/278MD2C704B1C34BF4E1BB8F6B710190D4E6C.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample26.pdf",
+    "sha256": "2fd039056c7d",
+    "doc_id": "sample26"
+  },
+  {
+    "title": "Reserve Bank of India (Urban Co-operative Banks \u2013 Credit Facilities) Directions, 2025 (Updated as on July 15, 2026)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13028",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/277MDFF00147367D64F02899A3A756CDA9093.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample27.pdf",
+    "sha256": "5270666363e9",
+    "doc_id": "sample27"
+  },
+  {
+    "title": "Reserve Bank of India (Rural Co-operative Banks \u2013 Know Your Customer) Directions, 2025 (Updated as on December 29, 2025)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=12988",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/316MDC827AC45BD1248DFB272637379D4128C.PDF",
+    "matched_topics": [
+      "kyc"
+    ],
+    "local_path": "raw_pdfs\\sample28.pdf",
+    "sha256": "1f501e9ee12d",
+    "doc_id": "sample28"
+  },
+  {
+    "title": "Reserve Bank of India (Rural Co-operative Banks \u2013 Interest Rates on Advances) Directions, 2025",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=12996",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/308MD5EFEC2756D6C49D89939321BFA1112ED.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample29.pdf",
+    "sha256": "de81ff7f58e0",
+    "doc_id": "sample29"
+  },
+  {
+    "title": "Reserve Bank of India (Rural Co-operative Banks \u2013 Credit Facilities) Directions, 2025 (Updated as on April 01, 2026)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13002",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/302MD9447AEE4C3A543AA970CAF17ECD0E440.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample30.pdf",
+    "sha256": "c55c1e84549e",
+    "doc_id": "sample30"
+  },
+  {
+    "title": "Reserve Bank of India (All India Financial Institutions \u2013 Know Your Customer) Directions, 2025 (Updated as on December 29, 2025)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=12969",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/335MDB36143CAC69041858F40094B961AD8D1.PDF",
+    "matched_topics": [
+      "kyc"
+    ],
+    "local_path": "raw_pdfs\\sample31.pdf",
+    "sha256": "0978f45eb303",
+    "doc_id": "sample31"
+  },
+  {
+    "title": "Reserve Bank of India (All India Financial Institutions \u2013 Credit Facilities) Directions, 2025 (Updated as on July 15, 2026)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=12981",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/323MDC03F7527B77E43B586042F9F3104C2B7.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample32.pdf",
+    "sha256": "0305baaf1c22",
+    "doc_id": "sample32"
+  },
+  {
+    "title": "Reserve Bank of India (Non-Banking Financial Companies \u2013 Know Your Customer) Directions, 2025 (Updated as on December 29, 2025)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=12943",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/361MD1E2F8EA063454AD5AFA1D02A1BA5ACA7.PDF",
+    "matched_topics": [
+      "kyc"
+    ],
+    "local_path": "raw_pdfs\\sample33.pdf",
+    "sha256": "e29f3acf65a7",
+    "doc_id": "sample33"
+  },
+  {
+    "title": "Reserve Bank of India (Non-Banking Financial Companies \u2013 Credit Cards: Issuance and Conduct) Directions, 2025",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=12956",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/348MD993245D8570047299D1814811F20AFEE.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample34.pdf",
+    "sha256": "5bb0cc0a251a",
+    "doc_id": "sample34"
+  },
+  {
+    "title": "Reserve Bank of India (Non-Banking Financial Companies \u2013 Credit Facilities) Directions, 2025 (updated as on July 15, 2026)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=12957",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/347MD5CC21D3597C04354B67A42A1A4CB439C.PDF",
+    "matched_topics": [
+      "loans"
+    ],
+    "local_path": "raw_pdfs\\sample35.pdf",
+    "sha256": "24726d82bc6a",
+    "doc_id": "sample35"
+  },
+  {
+    "title": "Reserve Bank of India (Asset Reconstruction Companies \u2013 Know Your Customer) Directions, 2025 (Updated as on December 29, 2025)",
+    "detail_page_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=12927",
+    "pdf_url": "https://rbidocs.rbi.org.in/rdocs/notification/PDFs/377MDC2C0B12BF5FA4716B1186CBAFBAEE6DC.PDF",
+    "matched_topics": [
+      "kyc"
+    ],
+    "local_path": "raw_pdfs\\sample36.pdf",
+    "sha256": "9152d94dfdb1",
+    "doc_id": "sample36"
+  }
+]
