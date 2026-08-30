@@ -23,13 +23,13 @@ analysis_llm = ChatOpenAI(
 # Step 1: Extract clauses from user's document
 clause_extractor = clause_llm.with_structured_output(ExtractedClauses)
 
-def extract_clauses(user_doc: str):
+async def extract_clauses(user_doc: str):
     messages = [
         ("system", CLAUSE_EXTRACTION_SYSTEM_PROMPT),
         ("human", user_doc)
     ]
 
-    result = clause_extractor.invoke(messages)
+    result = await clause_extractor.ainvoke(messages)
     final_clauses = []
 
     for extracted_clause in result.clauses:
@@ -115,8 +115,8 @@ def build_analysis_context(all_clauses_chunks):
         source_rules = ""
         for i, doc in enumerate(clause_chunks["relevant_source_chunks"]):
             source_rules += f"""
-            Source Rule {i+1}: {doc.get("page_content")}
-            Metadata: {doc.get("metadata")}
+            Source Rule {i+1}: {doc.get("text_content")}
+            Metadata: {doc.get("page_number")}
             """
 
             context_parts.append(clause_section + source_rules)
@@ -128,11 +128,11 @@ analysis_llm_structured = analysis_llm.with_structured_output(
     ContractAnalysis
 )
 
-def analyze_retrieved_clauses(context: str):
+async def analyze_retrieved_clauses(context: str):
     messages = [
         ("system", CONTRACT_ANALYSIS_SYSTEM_PROMPT),
         ("human", context)
     ]
 
-    response = analysis_llm_structured.invoke(messages)
+    response = await analysis_llm_structured.ainvoke(messages)
     return response.final_results

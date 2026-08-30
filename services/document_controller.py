@@ -4,7 +4,7 @@ from fastapi import UploadFile, HTTPException
 
 from services.document_parser import extract_text
 
-UPLOAD_DIR = Path("../../storage/uploads")
+UPLOAD_DIR = Path("storage/uploads")
 
 async def upload_user_document(file: UploadFile):
     try:
@@ -31,8 +31,7 @@ async def upload_user_document(file: UploadFile):
             "saved_doc_name": new_file_name,
             "original_file_name": file.filename,
             "total_pages": total_pages,
-            "text_length": total_words,
-            "content": store_file.read().decode('utf-8')
+            "text_length": total_words
         }
     except Exception as e:
         raise HTTPException(

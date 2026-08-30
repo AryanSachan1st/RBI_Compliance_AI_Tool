@@ -25,6 +25,8 @@ def extract_txt_text(file_path: str | Path) -> str:
     return content
 
 def extract_text(file_path: str | Path) -> str:
+    file_path = Path(file_path)
+    
     ext = file_path.suffix.lower()
 
     if ext == ".pdf":

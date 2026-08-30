@@ -37,7 +37,7 @@ import chromadb
 
 def store_embeddings(chunks: list[str], embeddings: list[list[float]], name: str = Field(description="type of data (source/user)")):
     chroma_client = chromadb.PersistentClient(
-        path="../../storage/vector_db"
+        path="storage/vector_db"
     )
 
     ids = [f"chunk_{i+1}" for i in range(len(chunks))]

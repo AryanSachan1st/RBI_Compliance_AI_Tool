@@ -12,8 +12,8 @@ class ExtractedClauses(BaseModel):
 class ClauseAnalysis(BaseModel):
     clause_id: str
     clause_type: str
-    clause_test: str
-    matching_clause_rules: List[str]
+    clause_text: str
+    matching_source_rules: List[str]
     analysis: str
     risk: str
     recommendation: str
