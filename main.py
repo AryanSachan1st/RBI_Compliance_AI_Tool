@@ -7,7 +7,6 @@ from services.rbi_ingestion_service import ingest_rbi_source
 async def lifespan(app: FastAPI):
     print("Application Started...")
     ingest_rbi_source()
-    print("RBI Source embeddings ingested in the API.")
     yield
     print("Application is shutting down...")
 
@@ -16,7 +15,6 @@ app = FastAPI(
     description="AI-Powered Regulatory Compliance Verification Platform for BFSI Documents.",
     lifespan=lifespan,
 )
-
 
 @app.get("/")
 def read_root():
