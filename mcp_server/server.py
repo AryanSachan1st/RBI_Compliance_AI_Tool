@@ -125,6 +125,17 @@ def log_audit_event_tool(event_type: str, document_id: Optional[str], payload: d
     """Persist a structured pipeline/tool event in the compliance audit trail."""
     return log_audit_event(event_type=event_type, document_id=document_id, payload=payload)
 
+
+@mcp.tool(name="search_regulatory_corpus")
+def search_regulatory_corpus_tool(
+    query: str,
+    semantic_matches: list[dict] | None = None,
+    limit: int = 3,
+    document_id: Optional[str] = None,
+) -> list[dict]:
+    """Hybrid-search the regulatory corpus and return citation-ready excerpts."""
+    return search_regulatory_corpus(query, semantic_matches, limit, document_id)
+
 if __name__ == "__main__":
     # stdio transport: this process communicates over stdin/stdout, which
     # is what you want when a client (LangChain's MCP adapter, Claude

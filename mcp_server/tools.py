@@ -192,3 +192,26 @@ def log_audit_event(
     """Persist a structured audit event through the audit connector."""
     from services.audit_service import write_audit_event
     return write_audit_event(event_type=event_type, document_id=document_id, payload=payload)
+
+
+def search_regulatory_corpus(
+    query: str,
+    semantic_matches: list[dict[str, Any]] | None = None,
+    limit: int = 3,
+    document_id: Optional[str] = None,
+) -> list[dict[str, Any]]:
+    """Search the provenance-preserving regulatory corpus through the MCP tool layer."""
+    from pathlib import Path
+    from services.audit_service import write_audit_event
+    from services.hybrid_retrieval_service import HybridRegulatoryRetriever, load_regulatory_corpus
+
+    corpus_path = Path(__file__).resolve().parents[1] / "storage" / "regulatory_chunks.json"
+    matches = HybridRegulatoryRetriever(load_regulatory_corpus(corpus_path)).fuse(
+        semantic_matches or [], query, limit=limit
+    )
+    write_audit_event("regulatory_search", document_id, {
+        "query": query,
+        "result_count": len(matches),
+        "source_titles": sorted({match["source_title"] for match in matches}),
+    })
+    return matches

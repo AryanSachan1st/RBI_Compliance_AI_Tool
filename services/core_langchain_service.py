@@ -10,7 +10,7 @@ from langchain_openai import OpenAIEmbeddings
 from config.settings import OPENAI_API_KEY
 import asyncio
 from pathlib import Path
-from services.hybrid_retrieval_service import HybridRegulatoryRetriever, load_regulatory_corpus
+from mcp_server.tools import search_regulatory_corpus
 
 clause_llm = ChatOpenAI(
     model="gpt-5.6-luna",
