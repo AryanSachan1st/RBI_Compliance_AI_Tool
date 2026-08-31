@@ -1,10 +1,11 @@
-﻿from fastapi import APIRouter, File, UploadFile
-from fastapi.responses import StreamingResponse
+﻿from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi.responses import FileResponse, StreamingResponse
 import json
 
 from models.pipeline_status_model import PipelineStatus
 from services.agent_orchestrator import ComplianceAgentOrchestrator, ComplianceWorkflowState
 from services.document_controller import upload_user_document
+from services.report_service import create_compliance_report, get_report_path
 
 router = APIRouter(prefix="/upload-doc", tags=["user doc upload"])
 
@@ -30,8 +31,22 @@ async def run_pipeline(doc_text: str, document_understanding: dict, document_id:
     yield f"data: {json.dumps({'stage': PipelineStatus.SCORING_RISK})}\n\n"
     agents.risk_assessment_agent(state)
     payload = agents.reporting_agent(state)
+    report_artifact = create_compliance_report(document_id, document_understanding, payload)
+    payload["report"] = {
+        "report_id": report_artifact["report_id"],
+        "download_url": f"/upload-doc/reports/{report_artifact['report_id']}",
+    }
     payload["stage"] = PipelineStatus.DONE
     yield f"data: {json.dumps(payload)}\n\n"
+
+
+@router.get("/reports/{report_id}")
+def download_compliance_report(report_id: str):
+    try:
+        path = get_report_path(report_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="Compliance report not found.") from exc
+    return FileResponse(path, media_type="application/json", filename=path.name)
 
 
 @router.post("/")

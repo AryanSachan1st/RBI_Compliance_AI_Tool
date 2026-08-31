@@ -64,6 +64,7 @@ class ComplianceAgentOrchestrator:
 
     def reporting_agent(self, state: ComplianceWorkflowState) -> dict[str, Any]:
         payload = {
+            "document_understanding": state.document_understanding,
             "entities": state.entities.model_dump(),
             "deterministic_verification": state.verification_results,
             "document_risk": state.document_risk,
