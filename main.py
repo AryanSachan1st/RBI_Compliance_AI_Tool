@@ -1,12 +1,12 @@
-from fastapi import FastAPI
+﻿from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from routes.document_routes import router as document_router
-from services.rbi_ingestion_service import ingest_rbi_source
+from services.rbi_ingestion_service import ingest_regulatory_corpus
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Application Started...")
-    ingest_rbi_source()
+    print(ingest_regulatory_corpus())
     yield
     print("Application is shutting down...")
 

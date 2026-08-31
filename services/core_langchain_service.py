@@ -91,6 +91,7 @@ async def retrieve_source_chunks(clause_text: str):
             "source_title": doc.metadata.get("source_title", "Unknown regulatory source"),
             "page_number": doc.metadata.get("page_number", doc.metadata.get("page")),
         })
+    hybrid_retriever = HybridRegulatoryRetriever(load_regulatory_corpus(CORPUS_PATH))
     return hybrid_retriever.fuse(semantic_matches, clause_text, limit=3)
 
 # Parallel chunk retrieval for all clauses - reduces latency - time taken = slowest LLM call for one chunk instead of sum of all calls
