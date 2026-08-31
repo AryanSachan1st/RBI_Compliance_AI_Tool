@@ -1,0 +1,31 @@
+﻿[
+  {
+    "source_title": "RBI (Commercial Banks - Interest Rates on Advances) Directions, 2025",
+    "regulator": "RBI",
+    "reference": "RBI/DOR/2025-26/161",
+    "issue_date": "2025-11-28",
+    "official_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx",
+    "local_filename": "rbi_commercial_bank_interest_rates_directions_2025.pdf",
+    "scope": "loan interest-rate clauses",
+    "approval_status": "requires rule-owner review"
+  },
+  {
+    "source_title": "RBI (NBFC - Credit Facilities) Directions, 2025",
+    "regulator": "RBI",
+    "reference": "RBI/DOR/2025-26/347",
+    "issue_date": "2025-11-28",
+    "official_url": "https://rbi.org.in/scripts/BS_ViewMasDirections.aspx?id=12957",
+    "local_filename": "rbi_nbfc_credit_facilities_directions_2025.pdf",
+    "scope": "NBFC loan facility clauses",
+    "approval_status": "requires rule-owner review"
+  },
+  {
+    "source_title": "IRDAI Insurance Fraud Monitoring Framework Guidelines",
+    "regulator": "IRDAI",
+    "reference": "local document; reviewer must confirm reference/effective date",
+    "official_url": "",
+    "local_filename": "irdai_insurance_fraud_monitoring_framework_guidelines.pdf",
+    "scope": "supplemental insurance fraud controls; not policyholder-disclosure coverage",
+    "approval_status": "supplemental_only"
+  }
+]
