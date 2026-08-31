@@ -13,6 +13,7 @@ from services.core_langchain_service import (
 from services.document_controller import upload_user_document
 from services.governance_service import apply_clause_confidence_gate
 from services.verification_service import run_deterministic_verifications
+from services.risk_scoring_service import score_document_risk
 
 router = APIRouter(prefix="/upload-doc", tags=["user doc upload"])
 
@@ -35,12 +36,15 @@ async def run_pipeline(doc_text: str, document_understanding: dict, document_id:
     yield f"data: {json.dumps({'stage': PipelineStatus.GENERATING_RESPONSE})}\n\n"
     final_analysis = await analyze_retrieved_clauses(build_analysis_context(clauses_chunks))
     governed_analysis = apply_clause_confidence_gate(final_analysis)
+    yield f"data: {json.dumps({'stage': PipelineStatus.SCORING_RISK})}\n\n"
+    document_risk = score_document_risk(governed_analysis, verification_results)
     serializable = [item.model_dump() for item in governed_analysis]
 
     payload = {
         "stage": PipelineStatus.DONE,
         "entities": entities.model_dump(),
         "deterministic_verification": verification_results,
+        "document_risk": document_risk,
         "results": serializable,
     }
     yield f"data: {json.dumps(payload)}\n\n"

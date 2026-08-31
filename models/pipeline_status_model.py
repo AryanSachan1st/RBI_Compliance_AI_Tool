@@ -6,5 +6,6 @@ class PipelineStatus(str, Enum):
     VERIFYING_FACTS = "Verifying numeric and disclosure facts..."
     EXTRACTING_CLAUSES = "Extracting clauses from your document..."
     SEARCHING_SOURCES  = "Searching for relevant sources..."
+    SCORING_RISK = "Calculating document compliance risk..."
     GENERATING_RESPONSE = "Generating your response..."
     DONE               = "Done"
