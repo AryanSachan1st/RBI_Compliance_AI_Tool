@@ -102,3 +102,8 @@ desktop.ini
 *.sqlite3
 # Runtime audit events (generated locally)
 /storage/audit/
+
+# Generated CNN model artifacts
+/models/*.h5
+/models/authenticity_labels.json
+/data/evaluation/cnn_holdout_results.json

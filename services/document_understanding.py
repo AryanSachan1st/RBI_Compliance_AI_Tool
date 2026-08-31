@@ -6,7 +6,15 @@ import re
 from typing import Any
 
 MODEL_PATH = Path("models/authenticity_model.h5")
+LABELS_PATH = Path("models/authenticity_labels.json")
 CLASS_NAMES = ["Loan_Agreement", "Insurance_Policy", "KYC_Form", "Other"]
+
+def _class_names() -> list[str]:
+    if LABELS_PATH.exists():
+        import json
+        labels = json.loads(LABELS_PATH.read_text(encoding="utf-8"))
+        if len(labels) == len(CLASS_NAMES) and all(isinstance(label, str) for label in labels): return labels
+    return CLASS_NAMES
 SUPPORTED_EXTENSIONS = {".pdf", ".png", ".jpg", ".jpeg"}
 PAGE_NUMBER_PATTERN = re.compile(r"\b(?:page\s*)?(\d{1,3})\s*(?:of|/)\s*(\d{1,3})\b", re.IGNORECASE)
 
@@ -83,7 +91,7 @@ def analyze_document(file_path: str | Path) -> dict[str, Any]:
             if model is not None:
                 prediction = model.predict(cv2.resize(image, (224, 224)).astype("float32")[None, ...], verbose=0)[0]
                 index = int(prediction.argmax())
-                item.update({"document_type": CLASS_NAMES[index], "classification_confidence": round(float(prediction[index]), 4)})
+                item.update({"document_type": _class_names()[index], "classification_confidence": round(float(prediction[index]), 4)})
             pages.append(item)
         sequence = _page_sequence(page_texts)
         status = "complete" if model is not None else "partial"
