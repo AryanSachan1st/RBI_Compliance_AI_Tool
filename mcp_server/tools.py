@@ -182,3 +182,13 @@ def validate_disclosures(
         context=_context(confidence, document_id, clause_id, source),
     )
     return result.model_dump(mode="json")
+
+
+def log_audit_event(
+    event_type: str,
+    document_id: Optional[str],
+    payload: dict[str, Any],
+) -> dict[str, Any]:
+    """Persist a structured audit event through the audit connector."""
+    from services.audit_service import write_audit_event
+    return write_audit_event(event_type=event_type, document_id=document_id, payload=payload)

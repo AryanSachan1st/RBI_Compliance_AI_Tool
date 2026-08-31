@@ -1,11 +1,11 @@
-"""
+﻿"""
 mcp_server/server.py
 
 The actual MCP server: registers the three functions in tools.py as MCP
 tools, so an LLM agent (e.g. Aryan's LangChain pipeline, or Claude itself)
 can call them over the MCP protocol instead of a direct Python import.
 
-This file contains NO rule logic of its own — every tool here is a
+This file contains NO rule logic of its own â€” every tool here is a
 one-line pass-through to mcp_server.tools, which is a one-line pass-
 through to rule_engine.executor.RuleExecutor. If you're debugging a wrong
 answer, the bug is in rule_engine/, not here (Section 15).
@@ -14,11 +14,11 @@ Requires the `mcp` package (NOT installed by the phase 1/2 setup):
     pip install mcp
 
 Written against `mcp` v2.x (the SDK renamed its main server class from
-`FastMCP` to `MCPServer` and moved the import path in v2 — see
+`FastMCP` to `MCPServer` and moved the import path in v2 â€” see
 https://py.sdk.modelcontextprotocol.io/v2/migration/). If your installed
 `mcp` is actually v1.x (`pip show mcp`), use
 `from mcp.server.fastmcp import FastMCP as MCPServer` instead of the
-import below — everything else in this file is unaffected, since
+import below â€” everything else in this file is unaffected, since
 `@mcp.tool()` and `mcp.run()` did not change between v1 and v2.
 
 Run standalone (stdio transport - the default, for local process/subprocess
@@ -38,21 +38,21 @@ from typing import Optional
 # Make the project root importable regardless of HOW this file is run.
 # Normal execution (`python -m mcp_server.server`) already has this on
 # sys.path, but `mcp dev mcp_server/server.py` loads this file directly
-# via importlib with only mcp_server/'s own folder on the path — not its
-# parent — so `import mcp_server` fails there without this. Safe either
+# via importlib with only mcp_server/'s own folder on the path â€” not its
+# parent â€” so `import mcp_server` fails there without this. Safe either
 # way: inserting an already-present path is a no-op.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from mcp.server.mcpserver import MCPServer
 
-from mcp_server.tools import validate_disclosures, validate_emi, validate_interest_rate
+from mcp_server.tools import log_audit_event, validate_disclosures, validate_emi, validate_interest_rate
 
 mcp = MCPServer(
     "rbi-rule-engine",
     instructions=(
         "Deterministic compliance checks for BFSI loan documents: EMI "
         "correctness, interest rate ceiling, and mandatory disclosure "
-        "presence. Every tool returns PASS, FAIL, or UNCERTAIN — never "
+        "presence. Every tool returns PASS, FAIL, or UNCERTAIN â€” never "
         "guesses. UNCERTAIN means either the inputs were incomplete/"
         "invalid, or the extraction confidence was below the configured "
         "threshold; in both cases this requires manual review, not a "
@@ -120,6 +120,10 @@ def validate_disclosures_tool(
         source=source,
     )
 
+@mcp.tool(name="log_audit_event")
+def log_audit_event_tool(event_type: str, document_id: Optional[str], payload: dict) -> dict:
+    """Persist a structured pipeline/tool event in the compliance audit trail."""
+    return log_audit_event(event_type=event_type, document_id=document_id, payload=payload)
 
 if __name__ == "__main__":
     # stdio transport: this process communicates over stdin/stdout, which
