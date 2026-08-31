@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, File
+﻿from fastapi import APIRouter, UploadFile, File
 from services.document_controller import upload_user_document
 from services.core_langchain_service import extract_clauses, retrieve_all_chunks, build_analysis_context, analyze_retrieved_clauses
 import json, asyncio
@@ -11,7 +11,8 @@ router = APIRouter(
     tags=["user doc upload"]
 )
 
-async def run_pipeline(doc_text: str):
+async def run_pipeline(doc_text: str, document_understanding: dict):
+    yield f"data: {json.dumps({'stage': PipelineStatus.ANALYZING_DOCUMENT, 'document_understanding': document_understanding})}\n\n"
     # Stage 1
     yield f"data: {json.dumps({'stage': PipelineStatus.EXTRACTING_CLAUSES})}\n\n"
     clauses = await extract_clauses(doc_text)
@@ -40,7 +41,7 @@ async def upload_document(file: UploadFile = File()):
     user_doc_text = extract_text(file_path)
 
     return StreamingResponse(
-        run_pipeline(user_doc_text),
+        run_pipeline(user_doc_text, response["document_understanding"]),
         media_type="text/event-stream",
         headers={
             "Cache-Control": "no-cache",
