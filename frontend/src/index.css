@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Paper / neutral surface scale */
+  --color-paper: #faf9f7;
+  --color-surface: #ffffff;
+  --color-surface-sunken: #f3f2ef;
+  --color-line: #e3e1dc;
+  --color-line-strong: #cbc8c0;
+
+  /* Text */
+  --color-ink: #1c1e1b;
+  --color-ink-soft: #5b5d57;
+  --color-ink-faint: #8b8d86;
+
+  /* Accent — deep teal-slate, not stock SaaS blue */
+  --color-accent: #1f3a3d;
+  --color-accent-soft: #2c5459;
+  --color-accent-tint: #e9eeee;
+
+  /* Risk signal colors — muted, not neon */
+  --color-risk-good: #2f7a4f;
+  --color-risk-good-tint: #eaf3ed;
+  --color-risk-warn: #a5690a;
+  --color-risk-warn-tint: #f7eee1;
+  --color-risk-bad: #b3261e;
+  --color-risk-bad-tint: #faeae9;
+
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Visible keyboard focus everywhere, no exceptions */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
