@@ -100,3 +100,5 @@ desktop.ini
 *.db
 *.sqlite
 *.sqlite3
+# Runtime audit events (generated locally)
+/storage/audit/
