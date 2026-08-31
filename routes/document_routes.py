@@ -4,7 +4,6 @@ from services.core_langchain_service import extract_clauses, retrieve_all_chunks
 import json, asyncio
 from fastapi.responses import StreamingResponse
 from models.pipeline_status_model import PipelineStatus
-from services.document_parser import extract_text
 
 router = APIRouter(
     prefix="/upload-doc",
@@ -35,10 +34,7 @@ async def run_pipeline(doc_text: str, document_understanding: dict):
 async def upload_document(file: UploadFile = File()):
     response = await upload_user_document(file)
 
-    file_name = response["saved_doc_name"]
-    file_path = f"storage/uploads/{file_name}"
-
-    user_doc_text = extract_text(file_path)
+    user_doc_text = response.pop("document_text")
 
     return StreamingResponse(
         run_pipeline(user_doc_text, response["document_understanding"]),

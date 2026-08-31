@@ -34,10 +34,12 @@ async def upload_user_document(file: UploadFile):
             "text_length": len(document_text),
             "total_words": total_words,
             "document_understanding": document_understanding,
+            "document_text": document_text,
         }
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(
             status_code=500,
             detail=f"Document processing failed: {str(e)}"
         )
-
