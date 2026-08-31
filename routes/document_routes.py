@@ -11,6 +11,7 @@ from services.core_langchain_service import (
     retrieve_all_chunks,
 )
 from services.document_controller import upload_user_document
+from services.governance_service import apply_clause_confidence_gate
 from services.verification_service import run_deterministic_verifications
 
 router = APIRouter(prefix="/upload-doc", tags=["user doc upload"])
@@ -33,7 +34,8 @@ async def run_pipeline(doc_text: str, document_understanding: dict, document_id:
 
     yield f"data: {json.dumps({'stage': PipelineStatus.GENERATING_RESPONSE})}\n\n"
     final_analysis = await analyze_retrieved_clauses(build_analysis_context(clauses_chunks))
-    serializable = [item.model_dump() for item in final_analysis]
+    governed_analysis = apply_clause_confidence_gate(final_analysis)
+    serializable = [item.model_dump() for item in governed_analysis]
 
     payload = {
         "stage": PipelineStatus.DONE,
