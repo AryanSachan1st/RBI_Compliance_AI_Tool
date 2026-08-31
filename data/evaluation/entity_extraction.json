@@ -1,0 +1,1 @@
+﻿{"expected":[{"entity_type":"emi","value":"15000"},{"entity_type":"interest_rate","value":"9.5"}],"predicted":[{"entity_type":"emi","value":"15000"},{"entity_type":"interest_rate","value":"10.0"}]}
