@@ -9,6 +9,8 @@ from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings
 from config.settings import OPENAI_API_KEY
 import asyncio
+from pathlib import Path
+from services.hybrid_retrieval_service import HybridRegulatoryRetriever, load_regulatory_corpus
 
 clause_llm = ChatOpenAI(
     model="gpt-5.6-luna",
@@ -58,9 +60,12 @@ embeddings = OpenAIEmbeddings(
     model="text-embedding-3-small"
 )
 
+CORPUS_PATH = Path(__file__).resolve().parents[1] / "storage" / "regulatory_chunks.json"
+hybrid_retriever = HybridRegulatoryRetriever(load_regulatory_corpus(CORPUS_PATH))
+
 vector_db = Chroma(
     collection_name="rbi_source_documents",
-    persist_directory="../../storage/vector_db",
+    persist_directory=str(Path(__file__).resolve().parents[1] / "storage" / "vector_db"),
     embedding_function=embeddings
 )
 
@@ -78,15 +83,15 @@ async def retrieve_source_chunks(clause_text: str):
     # run_in_executor allows you to run CPU-bound operations in a separate thread pool, preventing them from blocking the event loop
     result = await loop.run_in_executor(None, retriever.invoke, clause_text)
 
-    docs = []
-    for doc in result:
-        data = {
+    semantic_matches = []
+    for rank, doc in enumerate(result, start=1):
+        semantic_matches.append({
+            "chunk_id": doc.metadata.get("chunk_id", f"semantic-{rank}"),
             "text_content": doc.page_content,
-            "page_number": doc.metadata.get("page")
-        }
-        docs.append(data)
-
-    return docs
+            "source_title": doc.metadata.get("source_title", "Unknown regulatory source"),
+            "page_number": doc.metadata.get("page_number", doc.metadata.get("page")),
+        })
+    return hybrid_retriever.fuse(semantic_matches, clause_text, limit=3)
 
 # Parallel chunk retrieval for all clauses - reduces latency - time taken = slowest LLM call for one chunk instead of sum of all calls
 async def retrieve_all_chunks(all_clauses: list[ExtractedClause]):
@@ -127,7 +132,8 @@ def build_analysis_context(all_clauses_chunks):
         for i, doc in enumerate(clause_chunks["relevant_source_chunks"]):
             source_rules += f"""
             Source Rule {i+1}: {doc.get("text_content")}
-            Metadata: {doc.get("page_number")}
+            Citation: {doc.get("source_title")}, page {doc.get("page_number")}
+            Retrieval confidence: {doc.get("retrieval_confidence")}
             """
 
             context_parts.append(clause_section + source_rules)

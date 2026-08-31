@@ -1,0 +1,16 @@
+﻿[
+  {
+    "source_title": "Reserve Bank of India (Digital Lending) Directions, 2025",
+    "regulator": "RBI",
+    "official_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx",
+    "local_filename": "rbi_digital_lending_directions_2025.pdf",
+    "status": "download_from_official_source_before_ingestion"
+  },
+  {
+    "source_title": "IRDAI policyholder disclosure circular (selected by project team)",
+    "regulator": "IRDAI",
+    "official_url": "https://irdai.gov.in/document-detail",
+    "local_filename": "irdai_selected_disclosure_circular.pdf",
+    "status": "select_and_download_from_official_source_before_ingestion"
+  }
+]
