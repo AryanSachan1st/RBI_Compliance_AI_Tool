@@ -34,6 +34,8 @@ async def run_pipeline(doc_text: str, document_understanding: dict, document_id:
     agents.risk_assessment_agent(state)
     payload = agents.reporting_agent(state)
     report_artifact = create_compliance_report(document_id, document_understanding, payload)
+    payload["document_understanding"] = document_understanding
+    payload["structured_entities"] = payload["entities"]
     payload["report"] = {"report_id": report_artifact["report_id"], "download_url": f"/upload-doc/reports/{report_artifact['report_id']}"}
     payload["stage"] = PipelineStatus.DONE
     yield f"data: {json.dumps(payload)}\n\n"
@@ -58,3 +60,4 @@ async def upload_document(file: UploadFile = File()):
     response = await upload_user_document(file)
     user_doc_text = response.pop("document_text")
     return StreamingResponse(run_pipeline(user_doc_text, response["document_understanding"], response["saved_doc_name"]), media_type="text/event-stream", headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+
