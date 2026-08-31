@@ -1,8 +1,10 @@
-from langchain_openai import ChatOpenAI
+﻿from langchain_openai import ChatOpenAI
 from models.clause_model import ExtractedClause, ExtractedClauses
 from system_prompts.clause_extraction_prompt import CLAUSE_EXTRACTION_SYSTEM_PROMPT
 from system_prompts.contract_analysis_prompt import CONTRACT_ANALYSIS_SYSTEM_PROMPT
 from models.clause_model import ContractAnalysis
+from models.entity_model import StructuredDocumentEntities
+from system_prompts.entity_extraction_prompt import ENTITY_EXTRACTION_SYSTEM_PROMPT
 from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings
 from config.settings import OPENAI_API_KEY
@@ -20,6 +22,15 @@ analysis_llm = ChatOpenAI(
     api_key=OPENAI_API_KEY
 )
 
+# BRD FR-04: typed entity extraction for downstream deterministic verification.
+entity_extractor = clause_llm.with_structured_output(StructuredDocumentEntities)
+
+async def extract_structured_entities(user_doc: str) -> StructuredDocumentEntities:
+    messages = [
+        ("system", ENTITY_EXTRACTION_SYSTEM_PROMPT),
+        ("human", user_doc),
+    ]
+    return await entity_extractor.ainvoke(messages)
 # Step 1: Extract clauses from user's document
 clause_extractor = clause_llm.with_structured_output(ExtractedClauses)
 
